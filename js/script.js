@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas1')
 const ctx = canvas.getContext('2d')
-canvas.width = 800
-canvas.height = 500
+canvas.width = 1000
+canvas.height = 1000
 
 const keys = []
 
@@ -19,7 +19,9 @@ const player = {
 const playerSprite = new Image()
 playerSprite.src = "sithjester1.png"
 const background = new Image()
-// background.src = "background.png"
+background.src = "https://i.imgur.com/HQV32KO.jpg"
+
+// <a href="https://imgur.com/VprFYuo"><img src="https://i.imgur.com/VprFYuo.jpg" title="source: imgur.com" /></a>
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
   ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
