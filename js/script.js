@@ -19,33 +19,16 @@ const player = {
 const playerSprite = new Image()
 playerSprite.src = "sithjester1.png"
 const background = new Image()
-background.src = "background.png"
+// background.src = "background.png"
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
   ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
-
-
-// let position = 0
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-  // position++
-  drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, 
-    player.height, player.x, player.y, player.width * 2, player.height * 2)
-  // can scale with player height or width * 2.
-  movePlayer()
-  handlePlayerFrame()
-  requestAnimationFrame(animate)
-}
-
-animate()
-
 window.addEventListener("keydown", function(e) {
   keys[e.keyCode] = true
   player.moving = true
-  console.log(keys);
+  // console.log(keys);
 })
 
 window.addEventListener("keyup", function(e) {
@@ -58,21 +41,25 @@ function movePlayer() {
   // then move the player up when key is pressed
   // AND change their position (sprite) to face up (3)
   // do the same for left, right, down
-  if(keys[87] && player.y > 100){
+  if(keys[87] && player.y > 50){
     player.y -= player.speed
     player.frameY = 3
+    player.moving = true
   }
   if(keys[65] && player.x > 0){
     player.x -= player.speed
     player.frameY = 1
+    player.moving = true
   }
   if(keys[83] && player.y < canvas.height - player.height){
     player.y += player.speed
     player.frameY = 0
+    player.moving = true
   }
   if(keys[68] && player.x < canvas.width - player.width){
     player.x += player.speed
     player.frameY = 2
+    player.moving = true
   }
 }
 
@@ -83,6 +70,50 @@ function handlePlayerFrame() {
     else player.frameX = 0
 }
 
+
+// let position = 0
+
+// function animate() {
+//   ctx.clearRect(0, 0, canvas.width, canvas.height)
+//   ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+//   // position++
+//   drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, 
+//     player.height, player.x, player.y, player.width * 2, player.height * 2)
+//   // can scale with player height or width * 2.
+//   movePlayer()
+//   handlePlayerFrame()
+//   requestAnimationFrame(animate)
+// }
+
+// animate()
+
+let fps, fpsInterval, startTime, now, then, elapsed;
+
+function startAnimating(fps) {
+  fpsInterval = 1000/fps
+  then = Date.now()
+  startTime = then
+  animate()
+
+}
+
+function animate() {
+  requestAnimationFrame(animate)
+  now = Date.now()
+  elapsed = now - then
+  if(elapsed > fpsInterval) {
+    then = now - (elapsed % fpsInterval)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+    drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, 
+    player.height, player.x, player.y, player.width * 2, player.height * 2)
+    movePlayer()
+    handlePlayerFrame()
+  }
+
+}
+
+startAnimating(10)
 
 
 
