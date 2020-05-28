@@ -6,8 +6,8 @@ canvas.height = 500
 const keys = []
 
 const player = {
-  x: 0,
-  y: 0,
+  x: 200,
+  y: 200,
   width: 32,
   height: 48,
   frameX: 0,
@@ -32,21 +32,46 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
   // position++
-  drawSprite(playerSprite, 0, 0, player.width, player.height, 200, 200, player.width * 2, player.height * 2)
+  drawSprite(playerSprite, player.width * player.frameX, player.height * player.frameY, player.width, 
+    player.height, player.x, player.y, player.width * 2, player.height * 2)
   // can scale with player height or width * 2.
+  movePlayer()
   requestAnimationFrame(animate)
 }
 
 animate()
 
-window.addEventListener("keydown"), function(e) {
-
+window.addEventListener("keydown", function(e) {
+  keys[e.keyCode] = true
+  // console.log(keys);
 })
 
-window.addEventListener("keyup"), function(e) {
-  
+window.addEventListener("keyup", function(e) {
+  delete keys[e.keyCode]
 })
 
+function movePlayer() {
+  //if up key is pressed, and player's position on the window is less than height
+  // then move the player up when key is pressed
+  // AND change their position (sprite) to face up (3)
+  // do the same for left, right, down
+  if(keys[38] && player.y > 100){
+    player.y -= player.speed
+    player.frameY = 3
+  }
+  if(keys[37] && player.x > 0){
+    player.x -= player.speed
+    player.frameY = 1
+  }
+  if(keys[37] && player.x > 0){
+    player.x -= player.speed
+    player.frameY = 1
+  }
+  if(keys[37] && player.x > 0){
+    player.x -= player.speed
+    player.frameY = 1
+  }
+}
 
 
 
